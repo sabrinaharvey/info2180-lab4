@@ -6,7 +6,7 @@ window.onload = function(){
 
         var httpReq = new XMLHttpRequest();
 
-        var url = "superheroes.php";
+        var url = "./superheroes.php";
 
         httpReq.onreadystatechange = function(){
             if(httpReq.readyState === XMLHttpRequest.DONE){
