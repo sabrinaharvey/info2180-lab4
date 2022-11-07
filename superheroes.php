@@ -63,10 +63,44 @@ $superheroes = [
   ], 
 ];
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $chara = filter_var($_POST["character"], FILTER_SANITIZE_SPECIAL_CHARS);
+    if($chara == ""){
+        echo "<ul>";
+        foreach ($superheroes as $supe){
+            $alias = $supe['alias'];
+            echo "<li> $alias </li>";
+        }
+        echo "</ul>";
+       
+    }
+
+    else{
+        if(isset($_POST['character'])){
+            $heroFound = false;
+            foreach ($superheroes as $supe){
+                if(strtolower($chara) == strtolower($supe['name']) || 
+                strtolower($chara) == strtolower($supe['alias'])){
+                    $heroFound = true;
+                    $alias = $supe['alias']; 
+                    $name = $supe['name'];
+                    $bio = $supe['biography'];
+                    echo "<h3>$alias</h3>";
+                    echo "<h4>A.K.A $name</h4>";
+                    echo "<p>$bio</p>";
+                    break;
+                }
+            }
+
+            if(!$heroFound){
+                echo "<h2>SUPERHERO NOT FOUND.</h2>";
+            }
+        }
+
+    }
+}
+
 ?>
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+

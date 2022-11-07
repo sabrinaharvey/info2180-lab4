@@ -1,18 +1,22 @@
 window.onload = function(){
     let search = document.getElementsByClassName("btn")[0];
+    
+   
 
     search.addEventListener("click", function(element){
         element.preventDefault();
+        
 
         var httpReq = new XMLHttpRequest();
-
+        var charInput = document.getElementById('character').value;
+        
+        
         var url = "./superheroes.php";
 
         httpReq.onreadystatechange = function(){
             if(httpReq.readyState === XMLHttpRequest.DONE){
                 if(httpReq.status === 200){
-                    alert(this.responseText);
-                    document.querySelector("#container").innerHTML = this.responseText;
+                    document.querySelector("#result").innerHTML = this.responseText;
                     
                 }
             
@@ -21,8 +25,9 @@ window.onload = function(){
                 }
             }
         }
-        httpReq.open('GET', url, true);
-        httpReq.send();
+        httpReq.open('POST', url);
+        httpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpReq.send('character=' + encodeURIComponent(charInput));
         
     });
 }
